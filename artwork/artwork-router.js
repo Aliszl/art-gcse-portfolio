@@ -76,6 +76,22 @@ router.get("/", (req, res) => {
       });
   });
 
+  //Update
+  router.put('/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const artPiece = await helpers.getArtById(id);
+      if (artPiece) {
+        const [artEdit] = await helpers.updateArt(id, req.body);
+        res.status(200).json(artEdit);
+      } else {
+        res.status(404).json({ error: 'This Art Piece does not exist' });
+      }
+    }catch (error) {
+        res.status(500).json({ error: error });
+      }
+  }) 
+
   //get by artist
   router.get("/artist/:artist_id", async (req, res) => {
       try {

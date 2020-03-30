@@ -7,7 +7,8 @@ module.exports = {
     getArtByTheme,
     getThemeByArtist,
     addArt,
-    removeArt
+    removeArt,
+    updateArt
   };
  //Get all art
   function getAllArt() {
@@ -44,6 +45,16 @@ module.exports = {
       .where('id', id)
       .del();
   }
+
+//Update
+
+function updateArt(id, change){
+    return db('artwork')
+      .where({ id })
+      .update(change)
+      .returning('*');
+  }
+
 //get by artist
   function getArtByArtistId (artist_id) {
       // raw sql SELECT id, title, description,
