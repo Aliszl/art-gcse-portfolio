@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
         });
       });
   });
-
+  
     //get by id
     router.get("/:id", async (req, res) => {
         try {
@@ -49,6 +49,33 @@ router.get("/", (req, res) => {
           });
         }
       });
+
+      //DELETE
+  router.delete('/:id', async(req, res) => {
+    const { id } = req.params;
+    const deletedArt =[];
+  
+    helpers.getArtById(id).then(post =>{
+      deletedArt.push(post);
+      res.status(200).json(post);
+    })
+  
+    helpers
+      .removeArt(id)
+      .then(artPiece => {
+        if (!artPiece) {
+          res
+            .status(404)
+            .json({ message: "The art piece with the specified ID does not exist." });
+        } else {
+          res.status(204).json({ message: "Removed" });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  });
+
   //get by artist
   router.get("/artist/:artist_id", async (req, res) => {
       try {

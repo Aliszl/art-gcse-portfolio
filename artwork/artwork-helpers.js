@@ -6,7 +6,8 @@ module.exports = {
     getArtById,
     getArtByTheme,
     getThemeByArtist,
-    addArt
+    addArt,
+    removeArt
   };
  //Get all art
   function getAllArt() {
@@ -16,7 +17,7 @@ module.exports = {
    //Post new art
    //raw sql: INSERT INTO `artwork`(title, description,theme_id,artist_id,source_image)
 //VALUES('test','test',3,1,'https://art-gcse-portfolio.s3.eu-west-2.amazonaws.com/cambike.jpg');
-// return db('artwork').insert({title:}, {description},{theme_id},{artist_id},{source_image});
+
    function addArt(artPiece) {
     return db('artwork')
     .insert(artPiece)
@@ -24,6 +25,9 @@ module.exports = {
         return getArtById(ids[0]);
       });
   }
+
+
+  
       //get by id
   function getArtById(id) {
     // raw sql SELECT id, title, description,
@@ -33,6 +37,13 @@ module.exports = {
   .where("id", id)
   .select("id", "title", "description", "theme_id", "artist_id", "source_image");
 }
+
+  // DELETE FROM `artwork` WHERE id=8;
+  function removeArt(id) {
+    return db('artwork')
+      .where('id', id)
+      .del();
+  }
 //get by artist
   function getArtByArtistId (artist_id) {
       // raw sql SELECT id, title, description,
