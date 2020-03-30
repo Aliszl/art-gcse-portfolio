@@ -4,7 +4,8 @@ module.exports = {
     getAllArt,
     getArtByArtistId, 
     getArtById,
-    getArtByTheme 
+    getArtByTheme,
+    getThemeByArtist
   };
  //Get all art
   function getAllArt() {
@@ -30,7 +31,6 @@ module.exports = {
   }
 
 
-
   // get by theme
 function getArtByTheme(theme_id) {
     // raw sql SELECT id, title, description,
@@ -41,11 +41,14 @@ function getArtByTheme(theme_id) {
   .select("id", "title", "description", "theme_id", "artist_id", "source_image");
 }
 
-// function getThemeByArtist(artist_id, theme_id) {
-//     // raw sql SELECT id, title, description,
-//     // theme_id, artist_id,
-//     // source_image FROM `artwork`WHERE theme_id=1;
-//   return db('artwork')
-//   .where({theme_id })
-//   .select("id", "title", "description", "theme_id", "artist_id", "source_image");
-// }
+function getThemeByArtist(artist_id, theme_id) {
+    // RAW SQL SELECT id, title, description, theme_id, 
+    // artist_id, source_image
+    // FROM `artwork`
+    // WHERE artist_id=1
+    // AND theme_id=1;
+  return db('artwork')
+  .where({artist_id })
+  .andWhere({theme_id})
+  .select("id", "title", "description", "theme_id", "artist_id", "source_image");
+}

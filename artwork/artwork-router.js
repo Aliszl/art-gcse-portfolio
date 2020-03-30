@@ -54,9 +54,9 @@ router.get("/", (req, res) => {
   //get by artist and theme
   router.get("/artist/:artist_id/:theme_id", async (req, res) => {
     try {
-    //   const { artistId }= req.params;
-      const artPiece = await helpers.getArtByTheme('artist_id');
-      res.json(artPiece);
+      const { artist_id, theme_id }= req.params;
+      const artistTheme = await helpers.getThemeByArtist(artist_id, theme_id);
+      res.json(artistTheme);
     } catch (err) {
       res.status(500).json({
         message: "Failed to get artwork for this artist"
