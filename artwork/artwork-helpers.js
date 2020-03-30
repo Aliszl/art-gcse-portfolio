@@ -52,7 +52,6 @@ function updateArt(id, change){
     return db('artwork')
       .where({ id })
       .update(change)
-      .returning('*');
   }
 
 //get by artist

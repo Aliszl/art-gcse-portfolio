@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const helpers = require("./artwork-helpers");
-// const restricted = require("../auth/restricted-middleware.js");
+const restricted = require("../auth/restricted-middleware.js");
 
 //   /api/artwork
  //Get all art
-router.get("/", (req, res) => {
+router.get("/",(req, res) => {
     helpers.getAllArt()
       .then(art => {
         res.json(art);
@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
   });
 
   //POST new art
-  router.post("/", async (req, res) => {
+  router.post("/",restricted,  async (req, res) => {
     const payload = req.body;
     helpers
       .addArt(payload)
@@ -38,7 +38,7 @@ router.get("/", (req, res) => {
   });
   
     //get by id
-    router.get("/:id", async (req, res) => {
+    router.get("/:id", restricted, async (req, res) => {
         try {
           const { id } = req.params;
           const artPiece = await helpers.getArtById(id);
@@ -51,7 +51,7 @@ router.get("/", (req, res) => {
       });
 
       //DELETE
-  router.delete('/:id', async(req, res) => {
+  router.delete('/:id', restricted, async(req, res) => {
     const { id } = req.params;
     const deletedArt =[];
   
@@ -77,7 +77,7 @@ router.get("/", (req, res) => {
   });
 
   //Update
-  router.put('/:id', async (req, res) => {
+  router.put('/:id',restricted,  async (req, res) => {
     try {
       const { id } = req.params;
       const artPiece = await helpers.getArtById(id);
@@ -93,7 +93,7 @@ router.get("/", (req, res) => {
   }) 
 
   //get by artist
-  router.get("/artist/:artist_id", async (req, res) => {
+  router.get("/artist/:artist_id",restricted,  async (req, res) => {
       try {
         const { artist_id }= req.params;
      
