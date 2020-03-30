@@ -5,11 +5,24 @@ module.exports = {
     getArtByArtistId, 
     getArtById,
     getArtByTheme,
-    getThemeByArtist
+    getThemeByArtist,
+    addArt
   };
  //Get all art
   function getAllArt() {
     return db('artwork').select('id', 'title','description','source_image', 'theme_id', 'artist_id');
+  }
+
+   //Post new art
+   //raw sql: INSERT INTO `artwork`(title, description,theme_id,artist_id,source_image)
+//VALUES('test','test',3,1,'https://art-gcse-portfolio.s3.eu-west-2.amazonaws.com/cambike.jpg');
+// return db('artwork').insert({title:}, {description},{theme_id},{artist_id},{source_image});
+   function addArt(artPiece) {
+    return db('artwork')
+    .insert(artPiece)
+    .then(ids=> {
+        return getArtById(ids[0]);
+      });
   }
       //get by id
   function getArtById(id) {

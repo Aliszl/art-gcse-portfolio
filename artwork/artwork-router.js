@@ -11,6 +11,32 @@ router.get("/", (req, res) => {
       })
       .catch(err => res.send(err));
   });
+
+  //POST new art
+  router.post("/", async (req, res) => {
+    const payload = req.body;
+    helpers
+      .addArt(payload)
+      .then(artPiece => {
+        if (!artPiece) {
+          res
+            .staus(400)
+            .json({
+              errorMessage: "Please provide a new piece"
+            });
+        } else {
+          res.status(201).json(payload);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        res.end();
+        res.status(500).json({
+          error: "could not add new art"
+        });
+      });
+  });
+
     //get by id
     router.get("/:id", async (req, res) => {
         try {
