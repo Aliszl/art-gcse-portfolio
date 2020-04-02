@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { Layout } from "antd";
-import Art from "./components/Art"
+import Art from "./components/Art";
+// import SingleArtPiece from "./components/SingleArtPiece";
 import axios from "axios";
 import { Context } from "./context/Context";
 // import { useLocalStorage, withAuth, useForm } from "./hooks/CustomHooks";
@@ -15,6 +16,15 @@ const App = () => {
   const jumpToArtId = useHistory();
   const [art, setArt] = useState([]);
   const [currentArtId, setCurrentArtId] = useState(null);
+  const initialArtFormValues = {
+    source_image: "	https://art-gcse-portfolio.s3.eu-west-2.amazonaws.com/darkwood.jpg",
+    title: "",
+    description: "",
+   
+   
+  };
+
+  const [artPiece, setArtPiece] = useState(initialArtFormValues);
 
   const getAllArt = () => {
    axios
@@ -42,16 +52,17 @@ const App = () => {
   };
 
   const getCurrentArtId = (evt, id) => {
-    axios()
-      .get(`https://localhost:5000/api/artwork/${id}`)
-      .then(response => {
-        setArt(response.data);
-        setCurrentArtId(response.data.data.id);
-        jumpToArtId.push("/recipe");
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    // axios()
+    //   .get(`https://localhost:5000/api/artwork/${id}`)
+    //   .then(response => {
+        // setArt(response.data);
+        // setCurrentArtId(response.data.id);
+        console.log(id)
+        // jumpToArtId.push("/");
+      // })
+      // .catch(error => {
+      //   console.error(error);
+      // });
   };
   return (
     <div className="App">
@@ -64,7 +75,10 @@ const App = () => {
           setCurrentArtId,
           currentArtId,
           jumpToArtId, 
-          getCurrentArtId
+          getCurrentArtId,
+          artPiece, 
+          setArtPiece,
+          initialArtFormValues
         }}
       >
         <Layout>
@@ -73,6 +87,7 @@ const App = () => {
           </Header> */}
           <Content>
             <Route exact path="/" component={Art} />
+            {/* <Route exact path="/:id" component={SingleArtPiece} /> */}
             {/* <Route exact path="/art">
               <Home />
             </Route> */}
