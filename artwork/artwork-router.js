@@ -13,7 +13,7 @@ router.get("/",(req, res) => {
   });
 
   //POST new art
-  router.post("/",restricted,  async (req, res) => {
+  router.post("/",  async (req, res) => {
     const payload = req.body;
     helpers
       .addArt(payload)
@@ -38,7 +38,7 @@ router.get("/",(req, res) => {
   });
   
     //get by id
-    router.get("/:id", restricted, async (req, res) => {
+    router.get("/:id", async (req, res) => {
         try {
           const { id } = req.params;
           const artPiece = await helpers.getArtById(id);
@@ -51,7 +51,7 @@ router.get("/",(req, res) => {
       });
 
       //DELETE
-  router.delete('/:id', restricted, async(req, res) => {
+  router.delete('/:id',  async(req, res) => {
     const { id } = req.params;
     const deletedArt =[];
   
