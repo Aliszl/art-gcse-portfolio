@@ -7,15 +7,27 @@ import { Link } from "react-router-dom";
 
 export default function SingleArtPiece(props) {
   const { currentArtId } = useContext(Context);
-  // const {title, description,source_image } = currentArtId ;
-
+  const {title, description,source_image } = currentArtId ;
+console.log(currentArtId);
   return (
+    <>
+    {currentArtId && (
     <div className="card text-left">
-   <h1>hello</h1>
+
+  <h1>{title}</h1>
+  <h2>{description}</h2>
+  <h3>url:{source_image}</h3>
+  <img src={source_image} alt=""/>
+
     </div>
-  );
+  )
+  }
+  </>
+  )
+  
 }
-{/* // styling
+{
+  /* // styling
 // const StyledDiv = styled.div`
 //   margin: 20px auto;
 //   width: 80%;
@@ -33,10 +45,11 @@ export default function SingleArtPiece(props) {
 //   h3 {
 //     font-size: 1rem;
 //   }
-// `; */}
- 
+// `; */
+}
 
-     {/* <h1>{artPiece}</h1> 
+{
+  /* <h1>{artPiece}</h1> 
        <h1>{artPiece.title}</h1>
       <Link to={`/${currentArtId}`}>
       <Button>Edit piece</Button>
@@ -45,4 +58,5 @@ export default function SingleArtPiece(props) {
      <h1> {artPiece.title}</h1>
       <h2>Directions</h2>
       <h2>{artPiece.description}</h2>
-      <img src={artPiece.source_image} alt="food" />  */}
+      <img src={artPiece.source_image} alt="food" />  */
+}

@@ -17,17 +17,16 @@ const App = () => {
   const [art, setArt] = useState([]);
   const [currentArtId, setCurrentArtId] = useState(null);
   const initialArtFormValues = {
-    source_image: "	https://art-gcse-portfolio.s3.eu-west-2.amazonaws.com/darkwood.jpg",
+    source_image:
+      "	https://art-gcse-portfolio.s3.eu-west-2.amazonaws.com/darkwood.jpg",
     title: "",
-    description: "",
-   
-   
+    description: ""
   };
 
   const [artPiece, setArtPiece] = useState(initialArtFormValues);
 
   const getAllArt = () => {
-   axios
+    axios
       .get("http://localhost:5000/api/artwork/")
       .then(response => {
         console.log(response.data);
@@ -35,35 +34,32 @@ const App = () => {
         console.log(art);
       })
       .catch(error => {
-     console.log(error)
+        console.log(error);
       });
   };
-  
+
   const getArtById = (evt, id) => {
     axios
       .get(`http://localhost:5000/api/artwork/${id}`)
       .then(response => {
-        console.log("hi from inside axios");
-        console.log(id);    
+        console.log(id);
         console.log(response.data);
-            setCurrentArtId(response.data);
-                 jumpToArtId.push(`/${id}`);
-  
-    console.log(currentArtId);
-    // console.log(response.id)
+        setCurrentArtId(response.data[0]);
+        jumpToArtId.push(`/${id}`);
+        console.log(currentArtId);
       })
       .catch(error => {
         console.error(error);
       });
-    
   };
 
-    const deleteArt = (id) => {
+  const deleteArt = ( e, id) => {
+    e.preventDefault();
     axios
       .delete(`http://localhost:5000/api/artwork/${id}`)
       .then(response => {
-        setArt(response.data);
-        getAllArt();
+        setArt(art.filter(artPiece=>artPiece.id !== id));
+       
       })
       .catch(error => {
         console.error(error);
@@ -78,12 +74,12 @@ const App = () => {
           art,
           setArt,
           getAllArt,
-          deleteArt, 
+          deleteArt,
           setCurrentArtId,
           currentArtId,
-          jumpToArtId, 
+          jumpToArtId,
           getArtById,
-          artPiece, 
+          artPiece,
           setArtPiece,
           initialArtFormValues
         }}
@@ -106,7 +102,6 @@ const App = () => {
 };
 
 export default App;
-
 
 // import React from 'react';
 // import logo from './logo.svg';
