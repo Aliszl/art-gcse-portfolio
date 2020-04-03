@@ -17,7 +17,7 @@ export default function Art() {
 
   return (
     <StyledCards className="artPiece">
-      <h1>Art</h1>
+      <h1>Gallery</h1>
       <div className="searchBar">
         <SearchBar />
       </div>
@@ -46,10 +46,9 @@ const StyledCard = styled.div`
 
   @media (min-width: 768px) {
     margin: 0 auto;
+    height:auto;
+    width:auto;
   }
 
-  img {
-    height: 400px;
-    width: 30%;
-  }
+ 
 `;
