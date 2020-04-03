@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 import Art from "./components/Art";
-// import SingleArtPiece from "./components/SingleArtPiece";
+import SingleArtPiece from "./components/SingleArtPiece";
 import axios from "axios";
 import { Context } from "./context/Context";
 // import { useLocalStorage, withAuth, useForm } from "./hooks/CustomHooks";
@@ -32,16 +32,35 @@ const App = () => {
       .then(response => {
         console.log(response.data);
         setArt(response.data);
+        console.log(art);
       })
       .catch(error => {
      console.log(error)
       });
   };
-
-
-  const deleteArt = (evt, id) => {
+  
+  const getArtById = (evt, id) => {
     axios
-      .delete(`https://localhost:5000/api/artwork/${id}`)
+      .get(`http://localhost:5000/api/artwork/${id}`)
+      .then(response => {
+        console.log("hi from inside axios");
+        console.log(id);    
+        console.log(response.data);
+            setCurrentArtId(response.data);
+                 jumpToArtId.push(`/${id}`);
+  
+    console.log(currentArtId);
+    // console.log(response.id)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    
+  };
+
+    const deleteArt = (id) => {
+    axios
+      .delete(`http://localhost:5000/api/artwork/${id}`)
       .then(response => {
         setArt(response.data);
         getAllArt();
@@ -50,20 +69,8 @@ const App = () => {
         console.error(error);
       });
   };
-
-  const getCurrentArtId = (evt, id) => {
-    // axios()
-    //   .get(`https://localhost:5000/api/artwork/${id}`)
-    //   .then(response => {
-        // setArt(response.data);
-        // setCurrentArtId(response.data.id);
-        console.log(id)
-        // jumpToArtId.push("/");
-      // })
-      // .catch(error => {
-      //   console.error(error);
-      // });
-  };
+  console.log(art);
+  console.log(currentArtId);
   return (
     <div className="App">
       <Context.Provider
@@ -75,7 +82,7 @@ const App = () => {
           setCurrentArtId,
           currentArtId,
           jumpToArtId, 
-          getCurrentArtId,
+          getArtById,
           artPiece, 
           setArtPiece,
           initialArtFormValues
@@ -87,7 +94,7 @@ const App = () => {
           </Header> */}
           <Content>
             <Route exact path="/" component={Art} />
-            {/* <Route exact path="/:id" component={SingleArtPiece} /> */}
+            <Route exact path="/:id" component={SingleArtPiece} />
             {/* <Route exact path="/art">
               <Home />
             </Route> */}

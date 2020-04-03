@@ -1,35 +1,21 @@
 import React, { useContext } from "react";
 import { Context } from "../context/Context";
+import ArtCard from "./ArtCard";
 // import styled from "styled-components";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 
 export default function SingleArtPiece(props) {
-  const { artPiece, currentArtId } = useContext(Context);
+  const { currentArtId } = useContext(Context);
+  // const {title, description,source_image } = currentArtId ;
+
   return (
-    <h1>Single <div class="card text-left">
-      <img class="card-img-top" src="holder.js/100px180/" alt="">
-      <div class="card-body">
-        <h4 class="card-title">Title</h4>
-        <p class="card-text">Body</p>
-      </div>
-    </div></h1>
-    // <StyledDiv>
-    //   <h1>{artPiece}</h1>
-    //   {/* <h1>{artPiece.title}</h1>
-    //   <Link to={`/${currentArtId}`}>
-    //     <Button>Edit piece</Button>
-    //   </Link>
-    //   <h1>Title</h1>
-    //   <h1> {artPiece.title}</h1>
-    //   <h2>Directions</h2>
-    //   <h2>{artPiece.directions}</h2>
-    //   <img src={artPiece.source_image} alt="food" /> */}
-  
-    //  </StyledDiv>
+    <div className="card text-left">
+   <h1>hello</h1>
+    </div>
   );
 }
-// styling
+{/* // styling
 // const StyledDiv = styled.div`
 //   margin: 20px auto;
 //   width: 80%;
@@ -47,5 +33,16 @@ export default function SingleArtPiece(props) {
 //   h3 {
 //     font-size: 1rem;
 //   }
-// `;
+// `; */}
+ 
 
+     {/* <h1>{artPiece}</h1> 
+       <h1>{artPiece.title}</h1>
+      <Link to={`/${currentArtId}`}>
+      <Button>Edit piece</Button>
+    </Link>
+   
+     <h1> {artPiece.title}</h1>
+      <h2>Directions</h2>
+      <h2>{artPiece.description}</h2>
+      <img src={artPiece.source_image} alt="food" />  */}

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const { Meta } = Card;
 export default function ArtCard(props) {
-  const { deleteArt, getCurrentArtId } = useContext(Context);
+  const { deleteArt, getArtById } = useContext(Context);
 
   const { id, title, source_image, description } = props.artPiece;
   return (
@@ -17,7 +17,7 @@ export default function ArtCard(props) {
       >
         <Meta title={title} description={description} />
         <br />
-        <Button onClick={e => getCurrentArtId(e, id)}>View details</Button>
+        <Button onClick={e => getArtById (e, id)}>View details</Button>
         &nbsp;&nbsp;
         <Button type="primary" onClick={e => deleteArt(e, id)}>
           Delete
