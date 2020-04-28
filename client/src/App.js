@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import { Layout } from "antd";
-import Art from "./components/Art";
+// import GalleryAllArt from "./components/GalleryAllArt";
+import MyGallery from "./components/GalleryByUser";
+import AddArt from "./components/AddArt";
 import SingleArtPiece from "./components/SingleArtPiece";
 import axios from "axios";
 import { Context } from "./context/Context";
@@ -9,6 +11,8 @@ import { Context } from "./context/Context";
 import { useHistory } from "react-router-dom";
 import "./App.css";
 import "antd/dist/antd.css";
+import Home from "./components/Home";
+import Navigation from "./components/Navigation";
 
 const { Header, Content } = Layout;
 
@@ -67,6 +71,39 @@ const App = () => {
   };
   console.log(art);
   console.log(currentArtId);
+
+  const handleUpload = ()=>{
+    const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/alicloud/upload";
+    const CLOUDINARY_UPLOAD_PRESET = "fz3g2zoh";
+    let imgPreview = document.getElementById("img-preview");
+    let fileUpload = document.getElementById("file-upload");
+
+    fileUpload.addEventListener("change", function (event) {
+        console.log(event);
+          let file = event.target.files[0];
+          let formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+          console.log(file);
+    
+          axios({
+            url: CLOUDINARY_URL,
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            data: formData,
+          })
+            .then(function (res) {
+              console.log(res);
+              console.log(res.data.url);
+              imgPreview.src = res.data.secure_url;
+            })
+            .catch(function (err) {
+              console.error(err);
+            });
+      });
+}
   return (
     <div className="App">
       <Context.Provider
@@ -81,19 +118,24 @@ const App = () => {
           getArtById,
           artPiece,
           setArtPiece,
-          initialArtFormValues
+          initialArtFormValues,
+          handleUpload
         }}
       >
         <Layout>
-          {/* <Header>
+          <Header>
             <Navigation />
-          </Header> */}
+          </Header>
           <Content>
-            <Route exact path="/" component={Art} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/MyGallery" component={MyGallery} />
+            <Route exact path="/AddArt" component={AddArt} />
             <Route exact path="/:id" component={SingleArtPiece} />
             {/* <Route exact path="/art">
               <Home />
             </Route> */}
+             </Switch>
           </Content>
         </Layout>
       </Context.Provider>
@@ -103,29 +145,4 @@ const App = () => {
 
 export default App;
 
-// import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;

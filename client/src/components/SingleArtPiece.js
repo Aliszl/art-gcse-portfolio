@@ -19,6 +19,9 @@ export default function SingleArtPiece(props) {
           <h1>{title}</h1>
           <h2>{description}</h2>
           <h3>url:{source_image}</h3>
+          <Button type="primary" onClick={console.log('click')}>
+          Edit
+        </Button>
         </StyledCard>
       )}
     </>
