@@ -18,13 +18,13 @@ const Navigation = () => {
           <Link to="/MyGallery">My Gallery</Link>
         </Menu.Item>
         <Menu.Item key="3">
-          <Link to="/login">Login</Link>
+          <Link to="/AddArt">Add Art</Link>
         </Menu.Item>
         <Menu.Item key="4">
-          <Link to="/registration">Registration</Link>
+          <Link to="/login">Login</Link>
         </Menu.Item>
         <Menu.Item key="5">
-          <Link to="/AddArt">Add Art Piece</Link>
+          <Link to="/registration">Registration</Link>
         </Menu.Item>
       </Menu>
     </>

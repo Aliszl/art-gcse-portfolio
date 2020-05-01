@@ -11,9 +11,9 @@ export default function ArtCard(props) {
     id,
     title,
     source_image,
-    description,
-    artist_id,
-    theme_id
+    // description,
+    // artist_id,
+    // theme_id
   } = props.artPiece;
   return (
     <StyledCard className="card text-left">

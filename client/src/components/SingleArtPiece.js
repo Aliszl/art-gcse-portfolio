@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../context/Context";
-import ArtCard from "./ArtCard";
+// import ArtCard from "./ArtCard";
 import { Button } from "antd";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { StyledCard } from "../styles/styled-components";
 
 export default function SingleArtPiece(props) {

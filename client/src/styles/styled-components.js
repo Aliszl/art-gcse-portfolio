@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {  Form} from "antd";
 
 export const StyledCard = styled.div`
   margin: 30px auto;
@@ -60,4 +61,42 @@ export const StyledCard = styled.div`
       top: -2.5vmin;
     }
   }
+`;
+
+export const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 3rem;
+  width: 50vw;
+  font-size: 3rem;
+  padding: 2.5rem !important;
+  margin: 2.5rem !important;
+  background: #fbfbfb;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  @media (min-width: 768px) {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  form.Item {
+    font-size: 3rem;
+  }
+  input {
+    font-size: 3rem;
+    width: 62%;
+    height: 50px;
+    @media (min-width: 768px) {
+      margin: 0 auto;
+      width: 90%;
+    }
+  }
+`;
+
+export const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
 `;

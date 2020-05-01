@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import { Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 // import GalleryAllArt from "./components/GalleryAllArt";
 import MyGallery from "./components/GalleryByUser";
@@ -20,14 +20,9 @@ const App = () => {
   const jumpToArtId = useHistory();
   const [art, setArt] = useState([]);
   const [currentArtId, setCurrentArtId] = useState(null);
-  const initialArtFormValues = {
-    source_image:
-      "	https://art-gcse-portfolio.s3.eu-west-2.amazonaws.com/darkwood.jpg",
-    title: "",
-    description: ""
-  };
+ 
 
-  const [artPiece, setArtPiece] = useState(initialArtFormValues);
+  // const [artPiece, setArtPiece] = useState(initialFormValues);
 
   const getAllArt = () => {
     axios
@@ -108,18 +103,17 @@ const App = () => {
     <div className="App">
       <Context.Provider
         value={{
-          art,
-          setArt,
+          art, setArt,
           getAllArt,
           deleteArt,
           setCurrentArtId,
           currentArtId,
           jumpToArtId,
           getArtById,
-          artPiece,
-          setArtPiece,
-          initialArtFormValues,
-          handleUpload
+          // artPiece,
+          // setArtPiece,
+                    handleUpload,
+          // newArt,  setNewArt
         }}
       >
         <Layout>
