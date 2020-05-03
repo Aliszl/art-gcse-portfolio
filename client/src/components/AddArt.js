@@ -6,47 +6,93 @@ import {
   StyledCard,
   StyledForm,
   StyledContainer,
+  Upload,
 } from "../styles/styled-components";
-// import axios from "axios";
+import axios from "axios";
 import { Context } from "../context/Context";
 import emptyFrame from "../img/emptyFrame.png";
 // import { Formik, Form, Field, ErrorMessage } from "formik";
 import { CameraOutlined, EditOutlined } from "@ant-design/icons";
 
-const initialFormValues = {
-  source_image:
-    "https://art-gcse-portfolio.s3.eu-west-2.amazonaws.com/darkwood.jpg",
-  title: "",
-  description: "",
-  artist_id: 1,
-  theme_id: 1,
-};
+
 
 export default function AddArt(props) {
   const history = useHistory();
   const { getAllArt } = useContext(Context);
-  const { handleUpload } = useContext(Context);
+  // const { handleUpload } = useContext(Context);
+ 
 
-  const [newArt, setNewArt] = useState(initialFormValues);
+  const handleUpload = () => {
+    const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/alicloud/upload";
+    const CLOUDINARY_UPLOAD_PRESET = "fz3g2zoh";
+    let imgPreview = document.getElementById("img-preview");
+    let fileUpload = document.getElementById("file-upload");
+    let srcDOMelement= document.getElementsByClassName("ant-input")[0];
+
+
+    fileUpload.addEventListener("change", function (event) {
+      console.log(event);
+      let file = event.target.files[0];
+      let formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+      console.log(file);
+   
+      axios({
+        url: CLOUDINARY_URL,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        data: formData,
+      })
+        .then(function (res) {
+          console.log(res);
+          console.log(res.data.url);
+          srcDOMelement.value = res.data.secure_url;
+          console.log(srcDOMelement.value);
+
+          console.log(initialFormValues);
+          imgPreview.src = res.data.secure_url;
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    });
+  };
+
+  let initialFormValues = {
+    source_image: null,
+    title: "",
+    description: "",
+    artist_id: 1,
+    theme_id: 1,
+  };
+
+  const [newArt, setNewArt] = useState();
+  console.log(initialFormValues);
   useEffect(() => {
     handleUpload();
   }, []);
 
   return (
-    <StyledCard>
-      <h1>Select Digital Art</h1>
-      <img src={emptyFrame} id="img-preview" width="300px" alt="placeholder" />
+    <div>
+      <Upload>
+        <h1>Select Digital Art</h1>
+        <img
+          src={emptyFrame}
+          id="img-preview"
+          width="300px"
+          alt="placeholder"
+        />
 
-      <label className="file-upload-container" htmlFor="file-upload">
-        <input id="file-upload" type="file" />
-      </label>
+        <label className="file-upload-container" htmlFor="file-upload">
+          <input id="file-upload" type="file" />
+        </label>
+      </Upload>
       <StyledContainer>
         <StyledForm
-          //   {...layout}
-          name="basic"
-          initialValues={{ remember: true }}
-          // onFinish={onFinish}
-          // onFinishFailed={onFinishFailed}
+       
         >
           <Form.Item
             label="Image url"
@@ -55,7 +101,9 @@ export default function AddArt(props) {
             <Input
               name="recipe_image"
               prefix={<CameraOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="url"
+              // placeholder="url"
+              // value={initialFormValues.source_image}
+              value ="hi"
             />
           </Form.Item>
 
@@ -93,6 +141,6 @@ export default function AddArt(props) {
           </Form.Item>
         </StyledForm>
       </StyledContainer>
-    </StyledCard>
+    </div>
   );
 }

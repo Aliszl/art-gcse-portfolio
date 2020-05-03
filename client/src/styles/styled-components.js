@@ -70,26 +70,36 @@ export const StyledForm = styled(Form)`
   font-size: 3rem;
   width: 50vw;
   font-size: 3rem;
-  padding: 2.5rem !important;
-  margin: 2.5rem !important;
+  padding: 2.5rem;
+  margin: 2.5rem;
   background: #fbfbfb;
   border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  @media (min-width: 768px) {
+  /* border-radius: 6px; */
+  @media (max-width: 768px) {
     margin: 0 auto;
-    width: 90%;
+    width: 92vw;
+    padding: 1rem;
+    /* width: 100vw; */
   }
-
+button{
+  margin-top:10px;
+}
   form.Item {
     font-size: 3rem;
-  }
-  input {
-    font-size: 3rem;
-    width: 62%;
-    height: 50px;
-    @media (min-width: 768px) {
+    @media (max-width: 768px) {
+      font-size: 0.5rem;
       margin: 0 auto;
       width: 90%;
+    }
+  }
+  input {
+    font-size: 1.5rem;
+    width: 62%;
+    height: 50px;
+    @media (max-width: 768px) {
+      font-size: 1rem;
+      margin: 0 auto;
+      width: 84%;
     }
   }
 `;
@@ -100,3 +110,17 @@ export const StyledContainer = styled.div`
   align-items: center;
   min-height: 80vh;
 `;
+
+export const Upload = styled.div`
+position: relative;
+text-align: center;
+
+.file-upload-container{
+  position: absolute;
+
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+
+}
+`
