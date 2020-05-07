@@ -17,7 +17,7 @@ export default function ArtCard(props) {
   } = props.artPiece;
   return (
     <StyledCard className="card text-left">
-      <div classname="outer">
+      <div className="outer">
       <h1>{title}</h1>
         <div className="frame">
           <img src={source_image} alt="" />

@@ -57,6 +57,7 @@ const App = () => {
       .delete(`http://localhost:5000/api/artwork/${id}`)
       .then((response) => {
         setArt(art.filter((artPiece) => artPiece.id !== id));
+        window.alert("artwork deleted from database")
       })
       .catch((error) => {
         console.error(error);

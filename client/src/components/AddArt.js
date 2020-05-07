@@ -3,8 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useHistory } from "react-router-dom";
 import {
-  StyledCard,
-  StyledForm,
+   StyledForm,
   StyledContainer,
   Upload,
 } from "../styles/styled-components";
@@ -69,12 +68,36 @@ export default function AddArt(props) {
     theme_id: 1,
   };
 
-  const [newArt, setNewArt] = useState();
+  const [newArt, setNewArt] = useState(initialFormValues);
   console.log(initialFormValues);
+  console.log(newArt);
   useEffect(() => {
     handleUpload();
   }, []);
 
+
+  const handleChange = e => {
+    setNewArt({
+      ...newArt,
+      [e.target.name]: e.target.value,
+  
+    });
+     console.log(e.target.value)
+};
+
+const handleSubmitArt = (e, inputValues) => {
+  console.log("submit")
+  axios
+    .post('http://localhost:5000/api/artwork', inputValues)
+    .then(response => {
+      console.log("submit")
+      getAllArt();
+      history.push('/');
+    })
+    .catch(e => {
+      alert(e.message);
+    });
+};
   return (
     <div>
       <Upload>
@@ -99,11 +122,12 @@ export default function AddArt(props) {
             rules={[{ required: true, message: "source_image" }]}
           >
             <Input
-              name="recipe_image"
+              name="source_image"
               prefix={<CameraOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
-              // placeholder="url"
+              placeholder="URL"
+              onChange={handleChange}
               // value={initialFormValues.source_image}
-              value ="hi"
+              //value ="URL"
             />
           </Form.Item>
 
@@ -115,7 +139,7 @@ export default function AddArt(props) {
               name="title"
               placeholder="Title"
               // value={newRecipe.title}
-              // onChange={handleChange}
+              onChange={handleChange}
               prefix={<EditOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
             />
           </Form.Item>
@@ -128,13 +152,41 @@ export default function AddArt(props) {
               name="description"
               placeholder="Description"
               // value={newRecipe.description}
-              // onChange={handleChange}
+              onChange={handleChange}
               prefix={<EditOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
             />
+
+               <Form.Item
+            label="artist_id"
+           hidden={true}
+            rules={[{ required: true, message: "Artist Id" }]}
+          >
+            <Input
+              name="artist_id"
+             
+             
+              onChange={handleChange}
+              prefix={<EditOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+            />
+              </Form.Item>
+
+              <Form.Item
+            label="theme_id"
+            rules={[{ required: true, message: "Artist Id" }]}
+            hidden={true}
+          >
+            <Input
+              name="theme_id"
+              
+              onChange={handleChange}
+              prefix={<EditOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+            />
+              </Form.Item>
             <Button
-              // onClick={e => handleSubmitRecipe(e, newRecipe)}
+             
               type="primary"
               htmlType="submit"
+              onClick={e => handleSubmitArt(e, newArt)}
             >
               Submit Recipe
             </Button>
