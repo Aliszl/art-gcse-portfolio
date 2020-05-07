@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 import SearchBar from "./SearchBar";
 
-export default function Art() {
+
+export default function GalleryAllArt() {
   const { art, getAllArt } = useContext(Context);
 
   useEffect(() => {
@@ -17,12 +18,13 @@ export default function Art() {
 
   return (
     <StyledCards className="artPiece">
-      <h1>Art</h1>
+      <h1>Gallery</h1>
       <div className="searchBar">
         <SearchBar />
       </div>
+
       <StyledCard>
-        {art.map(artPiece => {
+        {art.map((artPiece) => {
           return <ArtCard key={artPiece.id} artPiece={artPiece} />;
         })}
       </StyledCard>
@@ -46,10 +48,7 @@ const StyledCard = styled.div`
 
   @media (min-width: 768px) {
     margin: 0 auto;
-  }
-
-  img {
-    height: 400px;
-    width: 30%;
+    height: auto;
+    width: auto;
   }
 `;

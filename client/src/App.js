@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Route, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
-import Art from "./components/Art";
+import MyGallery from "./components/GalleryByUser";
+import AddArt from "./components/AddArt";
 import SingleArtPiece from "./components/SingleArtPiece";
 import axios from "axios";
 import { Context } from "./context/Context";
@@ -9,6 +10,9 @@ import { Context } from "./context/Context";
 import { useHistory } from "react-router-dom";
 import "./App.css";
 import "antd/dist/antd.css";
+import Home from "./components/Home";
+import Navigation from "./components/Navigation";
+
 
 const { Header, Content } = Layout;
 
@@ -16,24 +20,18 @@ const App = () => {
   const jumpToArtId = useHistory();
   const [art, setArt] = useState([]);
   const [currentArtId, setCurrentArtId] = useState(null);
-  const initialArtFormValues = {
-    source_image:
-      "	https://art-gcse-portfolio.s3.eu-west-2.amazonaws.com/darkwood.jpg",
-    title: "",
-    description: ""
-  };
 
-  const [artPiece, setArtPiece] = useState(initialArtFormValues);
+
 
   const getAllArt = () => {
     axios
       .get("http://localhost:5000/api/artwork/")
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         setArt(response.data);
         console.log(art);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -41,32 +39,33 @@ const App = () => {
   const getArtById = (evt, id) => {
     axios
       .get(`http://localhost:5000/api/artwork/${id}`)
-      .then(response => {
+      .then((response) => {
         console.log(id);
         console.log(response.data);
         setCurrentArtId(response.data[0]);
         jumpToArtId.push(`/${id}`);
         console.log(currentArtId);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   };
 
-  const deleteArt = ( e, id) => {
+  const deleteArt = (e, id) => {
     e.preventDefault();
     axios
       .delete(`http://localhost:5000/api/artwork/${id}`)
-      .then(response => {
-        setArt(art.filter(artPiece=>artPiece.id !== id));
-       
+      .then((response) => {
+        setArt(art.filter((artPiece) => artPiece.id !== id));
+        window.alert("artwork deleted from database")
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   };
   console.log(art);
   console.log(currentArtId);
+
   return (
     <div className="App">
       <Context.Provider
@@ -79,21 +78,23 @@ const App = () => {
           currentArtId,
           jumpToArtId,
           getArtById,
-          artPiece,
-          setArtPiece,
-          initialArtFormValues
+         
         }}
       >
         <Layout>
-          {/* <Header>
+          <Header>
             <Navigation />
-          </Header> */}
+          </Header>
           <Content>
-            <Route exact path="/" component={Art} />
-            <Route exact path="/:id" component={SingleArtPiece} />
-            {/* <Route exact path="/art">
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/MyGallery" component={MyGallery} />
+              <Route exact path="/AddArt" component={AddArt} />
+              <Route exact path="/:id" component={SingleArtPiece} />
+              {/* <Route exact path="/art">
               <Home />
             </Route> */}
+            </Switch>
           </Content>
         </Layout>
       </Context.Provider>
@@ -102,30 +103,3 @@ const App = () => {
 };
 
 export default App;
-
-// import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;

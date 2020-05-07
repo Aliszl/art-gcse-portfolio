@@ -10,6 +10,10 @@ module.exports = {
     removeArt,
     updateArt
   };
+
+  //upload art to Cloudinary
+
+
  //Get all art
   function getAllArt() {
     return db('artwork').select('id', 'title','description','source_image', 'theme_id', 'artist_id');
